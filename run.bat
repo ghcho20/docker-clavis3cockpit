@@ -2,8 +2,10 @@
 :: usage:
 ::   run.bat [alice ip] [bob ip]
 
-for /f "usebackq" %%a in (`hostname`) do set HOST=%%a
-for /f "tokens=2 skip=4 usebackq" %%a in (`nslookup %HOST%`) do set DISPLAY=%%a:0.0
+ipconfig | grep -A 3 'DockerNAT' | grep 'Address' | sed -n 's/.\+: \(.\+\)/\1/p' > host.ip
+set /p DISPLAY=<host.ip
+set DISPLAY=%DISPLAY%:0.0
+del host.ip
 
 if [%SHELL%] == [/bin/bash] (
 	set DOCKER=winpty docker
