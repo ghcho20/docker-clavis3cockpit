@@ -2,7 +2,7 @@
 :: usage:
 ::   run.bat [alice ip] [bob ip]
 
-ipconfig | grep -A 3 'DockerNAT' | grep 'Address' | sed -n 's/.\+: \(.\+\)/\1/p' > host.ip
+ipconfig | grep -A 3 'DockerNAT' | grep 'Address' | sed -n 's/.\+: //p' > host.ip
 set /p DISPLAY=<host.ip
 set DISPLAY=%DISPLAY%:0.0
 del host.ip
