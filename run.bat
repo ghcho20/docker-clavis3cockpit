@@ -2,15 +2,31 @@
 :: usage:
 ::   run.bat [alice ip] [bob ip]
 
+set INAME=c3cp:latest
+echo ^> Check image(%INAME%)
+for /F "tokens=* USEBACKQ" %%I in (`docker images -q %INAME%`) do (
+    set INAME_CHECK=%%I
+)
+if [%INAME_CHECK%]==[] (
+    echo ^> Install docker image(%INAME%)
+) else (
+    echo ^> Image(%INAME%) found !
+)
+if [%INAME_CHECK%]==[] (
+    docker build --rm -t %INAME% .
+)
+
 ipconfig | grep -A 3 'DockerNAT' | grep 'Address' | sed -n 's/.\+: //p' > host.ip
 set /p DISPLAY=<host.ip
 set DISPLAY=%DISPLAY%:0.0
 del host.ip
 
+set CNAME=c3cp
+echo ^> Launch a container(%CNAME%)
+set DOCKER=docker
 if [%SHELL%] == [/bin/bash] (
-	set DOCKER=winpty docker
-) else (
-	set DOCKER=docker
+	set DOCKER=winpty %DOCKER%
 )
+%DOCKER% run --rm --name %CNAME% --privileged -e DISPLAY=%DISPLAY% -it %INAME% %1 %2
 
-%DOCKER% run -it --rm --privileged --name c3cp -e DISPLAY=%DISPLAY% c3cp:latest %1 %2
+exit
