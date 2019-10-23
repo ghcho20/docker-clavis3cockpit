@@ -1,10 +1,7 @@
 #!/bin/bash
 
-if [ "$1" == "" ]; then
-	echo "Usage:"
-	echo "   run.sh <host ip>"
-	exit
-fi
+# Usage
+#     : run.sh [alice ip] [bob ip]
 
 INAME=c3cp:latest
 echo "> Check image($INAME)"
@@ -19,11 +16,12 @@ if [ "$INAME_CHECK" == "" ]; then
     docker build --rm -t $INAME .
 fi
 
-DISPLAY=$1:0.0
+DISPLAY=10.0.75.1:0.0
 
 CNAME=c3cp
 echo "> Launch a container($CNAME)"
-DOCKER=docker
-$DOCKER run --rm --name $CNAME --privileged -e DISPLAY=$DISPLAY -it $INAME
+DOCKER=$(which --skip-alias winpty 2> /dev/null)
+DOCKER="$DOCKER docker"
+$DOCKER run --rm --name $CNAME --privileged -e DISPLAY=$DISPLAY -it $INAME $1 $2
 
 exit
