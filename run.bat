@@ -16,10 +16,7 @@ if [%INAME_CHECK%]==[] (
     docker build --rm -t %INAME% .
 )
 
-ipconfig | grep -A 3 'DockerNAT' | grep 'Address' | sed -n 's/.\+: //p' > host.ip
-set /p DISPLAY=<host.ip
-set DISPLAY=%DISPLAY%:0.0
-del host.ip
+set DISPLAY=10.0.75.1:0.0
 
 set CNAME=c3cp
 echo ^> Launch a container(%CNAME%)
