@@ -26,4 +26,4 @@ if [%SHELL%] == [/bin/bash] (
 )
 %DOCKER% run --rm --name %CNAME% --privileged -e DISPLAY=%DISPLAY% -it %INAME% %1 %2
 
-exit
+::exit
