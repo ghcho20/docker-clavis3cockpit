@@ -16,7 +16,7 @@ if [%INAME_CHECK%]==[] (
     docker build --rm -t %INAME% .
 )
 
-set DISPLAY=10.0.75.1:0.0
+set DISPLAY=host.docker.internal:0.0
 
 set CNAME=c3cp
 echo ^> Launch a container(%CNAME%)

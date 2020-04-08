@@ -16,7 +16,7 @@ if [ "$INAME_CHECK" == "" ]; then
     docker build --rm -t $INAME .
 fi
 
-DISPLAY=10.0.75.1:0.0
+DISPLAY=host.docker.internal:0.0
 
 CNAME=c3cp
 echo "> Launch a container($CNAME)"
